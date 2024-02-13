@@ -1,14 +1,13 @@
 name: 'units-test'
 on:
-  schedule:
-    # Set the schedule time
-    - cron: '0 2 * * *'
   pull_request:
   push:
     branches:
       - main
       - 'releases/*'
-
+    schedule:
+    # Set the schedule time
+    - cron: '	0 0 * * *'
 jobs:
   # unit tests
   units:
