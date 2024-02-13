@@ -5,9 +5,7 @@ on:
     branches:
       - main
       - 'releases/*'
-    schedule:
-    # Set the schedule time
-    - cron: '	0 0 * * *'
+
 jobs:
   # unit tests
   units:
@@ -37,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./
         with:
-          sitemap-location: 'https://sengov.com/sitemap.xml'
+          sitemap-location: 'https://bojieyang.github.io/feed.xml'
           since: 2
           since-unit: 'month'
           key: ${{ secrets.INDEXNOW_KEY }}
