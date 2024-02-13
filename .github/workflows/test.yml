@@ -1,41 +1,20 @@
-name: 'units-test'
+name: "IndexNow"
 on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
+  schedule:
+  # Scheduled in UTC.
+  - cron:  '0 0,12 * * *'
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
-  # unit tests
-  units:
-    runs-on: ubuntu-latest
-    env:
-      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }} # INDEXNOW_KEY env variable is only used in unit tests.
-    steps:
-      - uses: actions/checkout@v4
-      - run: npm ci
-      - run: npm test
-
-  # test action works running from the graph
-  test-sitemap:
+  check-and-submit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./
+      - name: indexnow-action
+        uses: bojieyang/indexnow-action@v2
         with:
-          sitemap-location: 'https://sengov.com/sitemap.xml'
+          sitemap-location: "https://sengov.com/sitemap.xml"
           since: 1
-          since-unit: 'month'
-          key: ${{ secrets.INDEXNOW_KEY }}
-
-  test-atom:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./
-        with:
-          sitemap-location: 'https://bojieyang.github.io/feed.xml'
-          since: 2
-          since-unit: 'month'
+          since-unit: "day"
           key: ${{ secrets.INDEXNOW_KEY }}
